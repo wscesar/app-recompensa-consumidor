@@ -1,0 +1,49 @@
+<ion-header>
+        <ion-toolbar>
+      
+          <ion-title>Produtos</ion-title>
+      
+          <ion-buttons slot="end">
+              <ion-menu-toggle>
+                  <ion-button>
+                      <ion-icon name="menu"></ion-icon>
+                  </ion-button>
+              </ion-menu-toggle>
+          </ion-buttons>
+      
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content>
+          <div *ngIf="isLoading" class="ion-padding ion-text-center">
+              <ion-spinner color="primary"></ion-spinner>
+          </div>
+      
+          <ion-row *ngIf="!isLoading && products">
+              
+              <ion-col size-md="6" offset-md="3" class="ion-text-center">
+                  
+                  <ion-virtual-scroll [items]="products" approxItemHeight="70px">
+      
+                          <ion-item
+                              *virtualItem="let product" detail
+                              [routerLink]="['/', 'produto', product.id]" >
+              
+                              <ion-thumbnail slot="start" class="ion-margin-right">
+                                  <ion-img [src]="product.image"></ion-img>
+                              </ion-thumbnail>
+          
+                              <ion-label class="ion-margin">
+                                  <h2>{{ product.title }}</h2>
+                              </ion-label>
+      
+                          </ion-item>
+                      
+                  </ion-virtual-scroll>
+      
+              </ion-col>
+      
+          </ion-row>
+          
+      </ion-content>
+      
