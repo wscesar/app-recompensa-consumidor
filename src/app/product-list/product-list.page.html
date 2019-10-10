@@ -19,14 +19,14 @@
               <ion-spinner color="primary"></ion-spinner>
           </div>
       
-          <ion-row *ngIf="!isLoading && products">
+          <ion-row *ngIf="!isLoading && products && products.length > 0">
               
               <ion-col size-md="6" offset-md="3" class="ion-text-center">
                   
                   <ion-virtual-scroll [items]="products" approxItemHeight="70px">
       
                           <ion-item
-                              *virtualItem="let product" detail
+                              *virtualItem="let product; let i = index" detail
                               [routerLink]="['/', 'produto', product.id]" >
               
                               <ion-thumbnail slot="start" class="ion-margin-right">
@@ -35,6 +35,7 @@
           
                               <ion-label class="ion-margin">
                                   <h2>{{ product.title }}</h2>
+                                  <p>{{ restaurants[i].title }}</p>
                               </ion-label>
       
                           </ion-item>
