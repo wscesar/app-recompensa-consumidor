@@ -8,21 +8,21 @@ import { AuthService } from './auth.service';
 @Injectable({ providedIn: 'root' })
 export class RestaurantService {
 
-    constructor (
-        private db: AngularFirestore,
-        private authService: AuthService ) {}
+    constructor(
+        private firebase: AngularFirestore,
+        private authService: AuthService
+    ) {}
 
-
-    updateRestaurant(restaurantId: string, restaurant: Object) {
-        return this.db.collection('restaurants').doc(restaurantId).update({...restaurant})
+    updateRestaurant(restaurantId: string, restaurant: object) {
+        return this.firebase.collection('restaurants').doc(restaurantId).update({...restaurant});
     }
 
-    updateRestaurantImage(restaurantId: string, imageUrl: string) { 
-        return this.db.collection('restaurants').doc(restaurantId).update({image: imageUrl})
+    updateRestaurantImage(restaurantId: string, imageUrl: string) {
+        return this.firebase.collection('restaurants').doc(restaurantId).update({image: imageUrl});
     }
 
     getRestaurants() {
-        return this.db
+        return this.firebase
                     .collection<Restaurant[]>('restaurants')
                     .snapshotChanges()
                     .pipe (
@@ -37,19 +37,19 @@ export class RestaurantService {
     }
 
     getRestaurant(restaurantId: string) {
-        return this.db
-                    .doc<Restaurant>('restaurants/'+restaurantId)
+        return this.firebase
+                    .doc<Restaurant>('restaurants/' + restaurantId)
                     .snapshotChanges()
                     .pipe (
                         map ( doc => {
-                            const data = doc.payload.data()
+                            const data = doc.payload.data();
                             const id = doc.payload.id;
-                            const products = null
+                            const products = null;
                             return { ...data, id, products };
                         })
                     );
     }
 
-    
+
 
 }

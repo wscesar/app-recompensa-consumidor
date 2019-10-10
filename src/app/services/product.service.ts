@@ -22,24 +22,11 @@ export class ProductService {
     //     return this.firebase.collection('products').doc(productId).update({image: imageUrl})
     // }
 
-    getAllProducts() {
-        return this.firebase
-                    .collection('products')
-                    .snapshotChanges()
-                    .pipe (
-                        map ( ( docArray: DocumentChangeAction<any>[] ) => {
-                            return docArray.map( ( doc: DocumentChangeAction<any> ) => {
-                                const data: Product = doc.payload.doc.data();
-                                const id = doc.payload.doc.id;
-                                return {...data, id};
-                            });
-                        }),
-                    );
-    }
-
     getProducts(restaurantId: string) {
         return this.firebase
-                    .collection('products', ref => ref.where('restaurantId', '==', restaurantId))
+                    // .collection('products', ref => ref.where('restaurantId', '==', restaurantId))
+                    .collection<Product>('restaurants/' + restaurantId + '/products')
+                    // .order(by: 'random')
                     .snapshotChanges()
                     .pipe (
                         map ( ( docArray: DocumentChangeAction<any>[] ) => {
@@ -52,9 +39,10 @@ export class ProductService {
                     );
     }
 
-    getProduct(productId: string) {
+    getProduct(restaurantId: string, productId: string) {
         return this.firebase
-                    .doc<Product>('products/' + productId)
+                    // .doc<Product>('products/' + productId)
+                    .doc<Product>('restaurants/' + restaurantId + '/products/' + productId)
                     .snapshotChanges()
                     .pipe (
                         map ( doc => {

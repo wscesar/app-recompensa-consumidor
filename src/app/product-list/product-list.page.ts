@@ -10,7 +10,8 @@ import { Restaurant } from '../model/restaurant.model';
 })
 export class ProductListPage implements OnInit {
 
-    private products: Product[];
+    // private products: Product[] = [];
+    private products = [];
     private restaurants: Restaurant[] = [];
     private isLoading = true;
 
@@ -20,19 +21,19 @@ export class ProductListPage implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.productService.getAllProducts().subscribe(products => {
+        this.restaurantService.getRestaurants().subscribe( restaurants => {
 
-            this.products = products;
-
-            for (const p of products) {
-                this.restaurantService.getRestaurant(p.restaurantId).subscribe(restaurant => {
-                    this.restaurants.push(restaurant);
-                    this.isLoading = false;
-                    // console.log(restaurant);
+            for (const r of restaurants) {
+                this.productService.getProducts(r.id).subscribe( products => {
+                    for (const p of products) {
+                        this.products.push({...p, restaurant: r.title});
+                    }
                 });
             }
 
+            this.isLoading = false;
         });
+
     }
 
 }
