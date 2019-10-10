@@ -22,25 +22,36 @@
     <ion-row>
         <ion-col size-md="6" offset-md="3">
                 <form [formGroup]="form" (submit)="onSubmit()">
-                    <ion-item class="ion-margin-bottom">
-                        <ion-label position="floating">Nome</ion-label>
-                        <ion-input (change)="onSubmit()" formControlName="name"></ion-input>
+                    <ion-item class="ion-margin-bottom" class="email">
+                        <ion-label position="floating">E-Mail</ion-label>
+                        <ion-input formControlName="email"></ion-input>
                     </ion-item>
 
-                    <ion-button (click)="filePicker.click()" color="danger"
-                        type="button" expand="block">Selecionar imagem</ion-button>
-        
-                    <input style="visibility:hidden" type="file"
-                        #filePicker  (change)="uploadFile($event)" />
-                    
+                    <ion-item class="ion-margin-bottom">
+                        <ion-label position="floating">Nome</ion-label>
+                        <ion-input formControlName="name"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="ion-margin-bottom">
+                        <ion-label position="floating">Fone</ion-label>
+                        <ion-input formControlName="phone"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="ion-margin-bottom">
+                        <ion-label position="floating">Cidade</ion-label>
+                        <ion-input formControlName="city"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="ion-margin-bottom">
+                        <ion-label position="floating">Data de Nascimento</ion-label>
+                        <ion-datetime formControlName="birthday" displayFormat="DD/MM/YYYY" doneText="OK" cancelText="Cancelar"></ion-datetime>
+                    </ion-item>
+
                     <ion-button type="submit" expand="block">Atualizar Perfil</ion-button>
             
                 </form>
         </ion-col>
 
-        <ion-col size="6" offset="3" size-md="4" offset-md="4">
-            <ion-img [src]="image"></ion-img>
-        </ion-col>
     </ion-row>
     
 </ion-content>

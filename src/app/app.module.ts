@@ -16,34 +16,40 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
+import {NgxMaskModule, IConfig} from 'ngx-mask';
+
+// export const options: Partial<IConfig> | (() => Partial<IConfig>);
+
+
+
 
 @NgModule({
-  
+
     declarations: [AppComponent],
-    
+
     entryComponents: [],
-    
+
     imports: [
         BrowserModule,
         HttpClientModule,
         IonicModule.forRoot(),
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebase, 'my-dummy-database'),
-        AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-        AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-        AngularFireStorageModule // imports firebase/storage only needed for storage features
-
+        AngularFirestoreModule,
+        AngularFireAuthModule,
+        AngularFireStorageModule,
+        NgxMaskModule.forRoot()
     ],
-    
+
     providers: [
         StatusBar,
         SplashScreen,
-        { 
+        {
             provide: RouteReuseStrategy,
             useClass: IonicRouteStrategy
         }
     ],
-    
+
     bootstrap: [AppComponent]
 })
 export class AppModule {}
