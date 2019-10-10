@@ -14,24 +14,24 @@ export class UserService {
         private uiManager: UiManagerService,
         private firebaseAuth: AngularFireAuth,
         private authService: AuthService,
-        private db: AngularFirestore) {}
+        private firebase: AngularFirestore) {}
 
     // private uid = this.authService.getUserId();
 
     updateUser(userId: string, user: object) {
-        return this.db.collection('users').doc(userId).update({...user});
+        return this.firebase.collection('users').doc(userId).update(user);
     }
 
     updateUserImage(userId: string, imageUrl: string) {
-        return this.db.collection('users').doc(userId).update({image: imageUrl});
+        return this.firebase.collection('users').doc(userId).update({image: imageUrl});
     }
 
     updateUserScore(userId: string, newScore: number) {
-        return this.db.collection('users').doc(userId).update({score: newScore});
+        return this.firebase.collection('users').doc(userId).update({score: newScore});
     }
 
     getUser(userId: string) {
-        return this.db
+        return this.firebase
                     .doc<User>('users/' + userId)
                     .snapshotChanges()
                     .pipe (
