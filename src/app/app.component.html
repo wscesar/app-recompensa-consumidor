@@ -20,8 +20,8 @@
 
                 <ion-menu-toggle>
                     <ion-item lines="none" routerLink="/produtos">
-                        <ion-icon name="restaurant" slot="start"></ion-icon>
-                        <ion-label>Restaurantes</ion-label>
+                        <ion-icon name="happy" slot="start"></ion-icon>
+                        <ion-label>Promoções</ion-label>
                     </ion-item>
                 </ion-menu-toggle>
 
@@ -45,5 +45,21 @@
     </ion-menu>
 
     <ion-router-outlet main></ion-router-outlet>
+
+    <ion-tabs>
+        <ion-tab-bar slot="bottom">
+        
+            <ion-tab-button tab="produtos">
+                <ion-icon name="happy"></ion-icon>
+                <ion-label>Promoções</ion-label>
+            </ion-tab-button>
+        
+            <ion-tab-button tab="restaurantes">
+                <ion-icon name="restaurant"></ion-icon>
+                <ion-label>Restaurantes</ion-label>
+            </ion-tab-button>
+
+        </ion-tab-bar>
+    </ion-tabs>
 
 </ion-app>
