@@ -34,6 +34,7 @@ export class ProductListPage implements OnInit {
             this.isLoading = false;
         });
 
+
     }
 
 }
