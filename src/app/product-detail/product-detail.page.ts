@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Restaurant } from '../model/restaurant.model';
 import { Product } from '../model/product.model';
 import { User } from '../model/user.model';
 import { AuthService } from '../services/auth.service';
@@ -40,7 +39,7 @@ export class ProductDetailPage implements OnInit {
 
         this.getVouchers(this.userId, this.productId);
 
-        this.productService.getProduct(this.productId).subscribe( product => {
+        this.productService.getProduct(this.restaurantId, this.productId).subscribe( product => {
             this.product = product;
             this.restaurantId = product.restaurantId;
 
