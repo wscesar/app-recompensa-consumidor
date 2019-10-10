@@ -1,7 +1,0 @@
-{
-  "appId": "com.customer.fidelity.app",
-  "appName": "fidelity-app",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www"
-}
