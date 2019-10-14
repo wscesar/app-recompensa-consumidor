@@ -26,8 +26,14 @@ export class UserService {
         return this.firebase.collection('users').doc(userId).update({image: imageUrl});
     }
 
-    updateUserScore(userId: string, newScore: number) {
-        return this.firebase.collection('users').doc(userId).update({score: newScore});
+    // updateUserScore(userId: string, newScore: number) {
+    //     return this.firebase.collection('users').doc(userId).update({score: newScore});
+    // }
+
+    updateUserScore(restaurantId: string, userId: string, score: any) {
+        return this.firebase
+            .doc('users/' + userId + '/score/' + restaurantId)
+            .set({...score});
     }
 
     getUser(userId: string) {
@@ -41,6 +47,17 @@ export class UserService {
                             return { ...data, id  };
                         })
                     );
+    }
+
+    getUserScore(restaurantId: string, userId: string) {
+        return this.firebase
+            .doc<{score: number}>('users/' + userId + '/score/' + restaurantId)
+            .snapshotChanges()
+            .pipe (
+                map ( doc => {
+                    return doc.payload.data();
+                })
+            );
     }
 
 }

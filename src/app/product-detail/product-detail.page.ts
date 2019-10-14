@@ -8,6 +8,7 @@ import { ProductService } from '../services/product.service';
 import { AlertController } from '@ionic/angular';
 import { Voucher } from '../model/voucher.model';
 
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
@@ -18,11 +19,12 @@ export class ProductDetailPage implements OnInit {
     private isLoading = true;
     private disableButton = false;
 
-    private userId: string;
-    private productId: string;
-    private restaurantId: string;
+    private userId: string = this.authService.getUserId();
+    private productId: string = this.route.snapshot.paramMap.get('productId');
+    private restaurantId: string = this.route.snapshot.paramMap.get('restaurantId');
 
     private user: User;
+    private userScore = 0;
     private product: Product;
     private vouchers: Voucher[];
 
@@ -34,14 +36,17 @@ export class ProductDetailPage implements OnInit {
         private route: ActivatedRoute) {}
 
     ngOnInit() {
-        this.userId = this.authService.getUserId();
-        this.productId = this.route.snapshot.paramMap.get('productId');
+
+        this.userService.getUserScore(this.restaurantId, this.userId).subscribe(res => {
+            if (res !== undefined) {
+                this.userScore =  res.score;
+            }
+        });
 
         this.getVouchers(this.userId, this.productId);
 
         this.productService.getProduct(this.restaurantId, this.productId).subscribe( product => {
             this.product = product;
-            this.restaurantId = product.restaurantId;
 
             this.userService.getUser(this.userId).subscribe( user => {
                 this.user = user;
@@ -49,27 +54,28 @@ export class ProductDetailPage implements OnInit {
                 this.isLoading = false;
             });
         });
+
     }
 
 
     toggleButton() {
-        if (this.user.score < this.product.price) {
+        if (this.userScore < this.product.price) {
             this.disableButton = true;
         }
     }
 
 
     useVoucher() {
-        const uScore =  this.user.score;
+        const uScore =  this.userScore;
         const pScore =  this.product.price;
 
         if ( uScore >= pScore ) {
-            this.user.score = uScore - pScore;
+            this.userScore = uScore - pScore;
 
             this.userService
-                    .updateUserScore(this.userId, this.user.score)
+                    .updateUserScore(this.restaurantId, this.userId, this.userScore)
                     .then( () => {
-                        if (this.user.score < this.product.price) {
+                        if (this.userScore < this.product.price) {
                             this.disableButton = true;
                         }
 

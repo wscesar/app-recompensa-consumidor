@@ -5,7 +5,7 @@ export class User {
         public phone: string,
         public city: string,
         public birthday: string,
-        public score: number,
+        // public score: number,
         public id?: string,
     ) {}
 }

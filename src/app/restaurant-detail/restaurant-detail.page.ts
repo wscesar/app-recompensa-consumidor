@@ -32,7 +32,7 @@ export class RestaurantDetailPage implements OnInit {
     ngOnInit() {
         this.isLoading = true;
 
-        this.restaurantId = this.route.snapshot.paramMap.get('place');
+        this.restaurantId = this.route.snapshot.paramMap.get('restaurantId');
 
         this.restaurantService.getRestaurant(this.restaurantId).subscribe(restaurant => {
             this.restaurant = restaurant;

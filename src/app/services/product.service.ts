@@ -26,7 +26,6 @@ export class ProductService {
         return this.firebase
                     // .collection('products', ref => ref.where('restaurantId', '==', restaurantId))
                     .collection<Product>('restaurants/' + restaurantId + '/products')
-                    // .order(by: 'random')
                     .snapshotChanges()
                     .pipe (
                         map ( ( docArray: DocumentChangeAction<any>[] ) => {
@@ -41,15 +40,13 @@ export class ProductService {
 
     getProduct(restaurantId: string, productId: string) {
         return this.firebase
-                    // .doc<Product>('products/' + productId)
                     .doc<Product>('restaurants/' + restaurantId + '/products/' + productId)
                     .snapshotChanges()
                     .pipe (
                         map ( doc => {
                             const data = doc.payload.data();
                             const id = doc.payload.id;
-                            const products = null;
-                            return { ...data, id, products };
+                            return { ...data, id };
                         })
                     );
     }
@@ -60,7 +57,10 @@ export class ProductService {
 
     getVouchers(userId: string, productId: string) {
         return this.firebase
-                    .collection('vouchers', ref => ref.where('productId', '==', productId).where('userId', '==', userId))
+                    .collection(
+                        'vouchers',
+                        ref => ref.where('productId', '==', productId).where('userId', '==', userId)
+                    )
                     .snapshotChanges()
                     .pipe (
                         map ( ( docArray: DocumentChangeAction<any>[] ) => {

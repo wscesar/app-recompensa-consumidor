@@ -42,8 +42,8 @@
                 <div *virtualItem="let product">
         
                     <ion-item
-                        *ngIf="today >= product.startDate"
-                        detail [routerLink]="['/', 'produto', product.id]" >
+                        *ngIf="today >= product.startDate" detail
+                        [routerLink]="['/', 'restaurante', restaurantId, 'produto', product.id]" >
                         
                         <ion-thumbnail class="ion-margin">
                             <ion-img [src]="product.image"></ion-img>
@@ -51,7 +51,8 @@
             
                         <ion-label>
                             <h2>{{ product.title }}</h2>
-                            <p>{{ product.price | currency:'BRL'}}</p>
+                            <p>{{ product.price }} Pontos</p>
+                            <!-- <p>{{ product.price | currency:'BRL'}}</p> -->
                         </ion-label>
             
                     </ion-item>

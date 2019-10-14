@@ -19,18 +19,12 @@ const routes: Routes = [
     },
 
     {
-        path: 'produto/:productId',
-        // canActivate: [AuthGuard],
-        loadChildren: './product-detail/product-detail.module#ProductDetailPageModule'
-    },
-
-    {
         path: 'restaurante',
         // canActivate: [AuthGuard],
         children:
         [
             {
-                path: ':place',
+                path: ':restaurantId',
                 children:
                 [
                     {
@@ -53,6 +47,7 @@ const routes: Routes = [
         loadChildren: './profile-edit/profile-edit.module#ProfileEditPageModule'
     },
   { path: 'product-list', loadChildren: './product-list/product-list.module#ProductListPageModule' },
+  { path: 'qr-scan', loadChildren: './qr-scan/qr-scan.module#QrScanPageModule' },
 
 
 ];

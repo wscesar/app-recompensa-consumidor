@@ -15,33 +15,32 @@
       </ion-header>
       
       <ion-content>
-          <div *ngIf="isLoading" class="ion-padding ion-text-center">
-              <ion-spinner color="primary"></ion-spinner>
-          </div>
+            <div *ngIf="isLoading" class="ion-padding ion-text-center">
+                <ion-spinner color="primary"></ion-spinner>
+            </div>
       
-          <ion-row *ngIf="!isLoading && products && products.length > 0">
+            <ion-row *ngIf="!isLoading && products && products.length > 0">
               
-              <ion-col size-md="6" offset-md="3" class="ion-text-center">
+            <ion-col size-md="6" offset-md="3" class="ion-text-center">
                   
-                  <ion-virtual-scroll [items]="products" approxItemHeight="70px">
-      
-                          <ion-item
-                              *virtualItem="let product; let i = index" detail
-                              [routerLink]="['/', 'produto', product.id]" >
-              
-                              <ion-thumbnail slot="start" class="ion-margin-right">
-                                  <ion-img [src]="product.image"></ion-img>
-                              </ion-thumbnail>
-          
-                              <ion-label class="ion-margin">
-                                  <h2>{{ product.title }}</h2>
-                                  <!-- <p>{{ restaurants[i].title }}</p> -->
-                                  <p>{{ product.restaurant }}</p>
-                              </ion-label>
-      
-                          </ion-item>
-                      
-                  </ion-virtual-scroll>
+                <!-- <ion-virtual-scroll [items]="products" approxItemHeight="70px"> -->
+                <div *ngFor="let product of products">
+                    <!-- *virtualItem="let product; let i = index"  -->
+                    <ion-item detail
+                        [routerLink]="['/', 'restaurante', product.restaurantId, 'produto', product.id]" >
+            
+                        <ion-thumbnail slot="start" class="ion-margin-right">
+                            <ion-img [src]="product.image"></ion-img>
+                        </ion-thumbnail>
+    
+                        <ion-label class="ion-margin">
+                            <h2>{{ product.title }}</h2>
+                            <p>{{ product.restaurantTitle }}</p>
+                        </ion-label>
+    
+                    </ion-item>
+                </div>
+                <!-- </ion-virtual-scroll> -->
       
               </ion-col>
       

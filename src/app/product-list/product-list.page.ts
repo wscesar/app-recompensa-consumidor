@@ -23,14 +23,20 @@ export class ProductListPage implements OnInit {
     ngOnInit() {
         this.restaurantService.getRestaurants().subscribe( restaurants => {
 
-            for (const r of restaurants) {
-                this.productService.getProducts(r.id).subscribe( products => {
+            for (const restaurant of restaurants) {
+                this.productService.getProducts(restaurant.id).subscribe( products => {
                     for (const p of products) {
-                        this.products.push({...p, restaurant: r.title});
+                        console.log(p);
+                        this.products.push({
+                                            ...p,
+                                            restaurantId: restaurant.id,
+                                            restaurantTitle: restaurant.title,
+                                        });
                     }
                 });
             }
 
+            console.log(this.products);
             this.isLoading = false;
         });
 
