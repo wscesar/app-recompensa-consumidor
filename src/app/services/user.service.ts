@@ -30,12 +30,6 @@ export class UserService {
     //     return this.firebase.collection('users').doc(userId).update({score: newScore});
     // }
 
-    updateUserScore(restaurantId: string, userId: string, score: any) {
-        return this.firebase
-            .doc('users/' + userId + '/score/' + restaurantId)
-            .set({...score});
-    }
-
     getUser(userId: string) {
         return this.firebase
                     .doc<User>('users/' + userId)
@@ -49,6 +43,12 @@ export class UserService {
                     );
     }
 
+    updateUserScore(restaurantId: string, userId: string, score: any) {
+        return this.firebase
+            .doc('users/' + userId + '/score/' + restaurantId)
+            .set({...score});
+    }
+
     getUserScore(restaurantId: string, userId: string) {
         return this.firebase
             .doc<{score: number}>('users/' + userId + '/score/' + restaurantId)
@@ -59,5 +59,12 @@ export class UserService {
                 })
             );
     }
+
+    // addUserScore(restaurantId: string, userId: string, score: any) {
+    //     return this.firebase
+    //         .doc('users/' + userId + '/score/' + restaurantId)
+    //         .set({...score});
+    // }
+
 
 }

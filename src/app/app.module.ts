@@ -16,12 +16,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
-import {NgxMaskModule, IConfig} from 'ngx-mask';
-
-// export const options: Partial<IConfig> | (() => Partial<IConfig>);
-
-
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 
@@ -33,17 +29,18 @@ import {NgxMaskModule, IConfig} from 'ngx-mask';
         BrowserModule,
         HttpClientModule,
         IonicModule.forRoot(),
+        FormsModule,
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebase, 'my-dummy-database'),
         AngularFirestoreModule,
         AngularFireAuthModule,
         AngularFireStorageModule,
-        NgxMaskModule.forRoot()
     ],
 
     providers: [
         StatusBar,
         SplashScreen,
+        BarcodeScanner,
         {
             provide: RouteReuseStrategy,
             useClass: IonicRouteStrategy

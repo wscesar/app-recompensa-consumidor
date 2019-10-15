@@ -1,5 +1,5 @@
 {
-  "name": "fidelity-app",
+  "name": "Ionic4BarcodeScanner",
   "integrations": {
     "cordova": {},
     "capacitor": {}

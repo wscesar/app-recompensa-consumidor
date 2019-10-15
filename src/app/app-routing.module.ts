@@ -47,7 +47,7 @@ const routes: Routes = [
         loadChildren: './profile-edit/profile-edit.module#ProfileEditPageModule'
     },
   { path: 'product-list', loadChildren: './product-list/product-list.module#ProductListPageModule' },
-  { path: 'qr-scan', loadChildren: './qr-scan/qr-scan.module#QrScanPageModule' },
+  { path: 'qr-scan', loadChildren: './scan-voucher/scan-voucher.module#ScanVoucherPageModule' },
 
 
 ];

@@ -1,4 +1,4 @@
-package com.customer.fidelity.app;
+package io.ionic.starter;
 
 import android.os.Bundle;
 
