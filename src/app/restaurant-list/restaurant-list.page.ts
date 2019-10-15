@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Restaurant } from '../model/restaurant.model';
 import { RestaurantService } from '../services/restaurant.service';
-import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 
@@ -10,19 +9,17 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './restaurant-list.page.html'
 })
 export class RestaurantListPage implements OnInit {
-    private restaurants: Restaurant[];
     private isLoading = true;
+    private restaurants: Restaurant[];
     private userId =  this.authService.getUserId();
 
     constructor(
-        // private qrScanner: QRScanner,
         private restaurantService: RestaurantService,
         private userService: UserService,
         private authService: AuthService
     ) {}
 
-    ngOnInit() {
-
+    ionViewWillEnter() {
         this.restaurantService.getRestaurants().subscribe(restaurants => {
             this.restaurants = restaurants;
 
@@ -40,6 +37,11 @@ export class RestaurantListPage implements OnInit {
 
             this.isLoading = false;
         });
+    }
+
+    ngOnInit() {
+
+        
 
     }
 

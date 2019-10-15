@@ -1,5 +1,5 @@
 {
-  "name": "fidelity-app",
+  "name": "Ionic4BarcodeScanner",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -23,17 +23,17 @@
     "@angular/router": "~8.1.2",
     "@capacitor/android": "^1.2.1",
     "@capacitor/core": "1.2.1",
+    "@ionic-native/barcode-scanner": "^5.15.0",
     "@ionic-native/core": "^5.0.0",
-    "@ionic-native/qr-scanner": "^5.15.0",
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.7.1",
     "cordova-android": "8.1.0",
-    "cordova-plugin-qrscanner": "^3.0.1",
     "core-js": "^2.5.4",
-    "firebase": "^6.6.2",
-    "ngx-mask": "^8.1.0",
+    "firebase": "^7.2.0",
+    "phonegap-plugin-barcodescanner": "^8.1.0",
     "rxjs": "~6.5.1",
+    "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -53,7 +53,7 @@
     "codelyzer": "^5.0.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
-    "cordova-plugin-ionic-webview": "^4.1.1",
+    "cordova-plugin-ionic-webview": "^4.1.2",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
@@ -72,6 +72,7 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
+      "phonegap-plugin-barcodescanner": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
@@ -79,8 +80,7 @@
       "cordova-plugin-ionic-webview": {
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
-      "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-qrscanner": {}
+      "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
       "android"
