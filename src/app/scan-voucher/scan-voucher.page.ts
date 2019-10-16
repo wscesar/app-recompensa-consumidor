@@ -41,7 +41,6 @@ export class ScanVoucherPage implements OnInit {
 
     scanCode() {
         this.isLoading = true;
-
         this.barcodeScanner.scan()
             .then(barcodeData => {
 
