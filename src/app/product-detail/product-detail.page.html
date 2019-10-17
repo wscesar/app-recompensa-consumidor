@@ -26,9 +26,9 @@
   
     <ion-row>
         <ion-col size="6" offset="3">
-            <ion-card>
-                <ion-img [src]="product.image"></ion-img>
-            </ion-card>
+            <!-- <ion-card> -->
+                <ion-img *ngIf="product.image" [src]="product.image"></ion-img>
+            <!-- </ion-card> -->
         </ion-col>
     </ion-row>  
   
@@ -61,7 +61,7 @@
                 <ion-item *virtualItem="let voucher" [ngClass]="{'setOpacity': voucher.validate}">
                     <ion-label *ngIf="voucher.validate">Resgatado</ion-label>
                     <ion-label *ngIf="!voucher.validate">Disponivel</ion-label>
-                    <ion-label class="ion-text-right">{{voucher.voucherId}}</ion-label>
+                    <ion-label class="ion-text-right">{{voucher.id | slice : 0 : 8}}</ion-label>
                 </ion-item>
             </ion-virtual-scroll>
         </ion-col>

@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { ScanVoucherPage } from './scan-voucher.page';
+import { QRCodeScannerPage } from './qrcode-scanner.page';
 
 @NgModule({
   imports: [
@@ -14,10 +14,10 @@ import { ScanVoucherPage } from './scan-voucher.page';
     RouterModule.forChild([
       {
         path: '',
-        component: ScanVoucherPage
+        component: QRCodeScannerPage
       }
     ])
   ],
-  declarations: [ScanVoucherPage]
+  declarations: [QRCodeScannerPage]
 })
-export class ScanVoucherPageModule {}
+export class QRCodeScannerPageModule {}

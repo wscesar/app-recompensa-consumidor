@@ -43,10 +43,10 @@ export class UserService {
                     );
     }
 
-    updateUserScore(restaurantId: string, userId: string, score: any) {
+    updateUserScore(restaurantId: string, userId: string, newScore: number) {
         return this.firebase
             .doc('users/' + userId + '/score/' + restaurantId)
-            .set({...score});
+            .set({score: newScore});
     }
 
     getUserScore(restaurantId: string, userId: string) {

@@ -37,23 +37,27 @@ export class ProductDetailPage implements OnInit {
 
     ngOnInit() {
 
-        this.userService.getUserScore(this.restaurantId, this.userId).subscribe(res => {
-            if (res !== undefined) {
-                this.userScore =  res.score;
-            }
-        });
+        this.getVouchers(this.userId, this.restaurantId, this.productId);
 
-        this.getVouchers(this.userId, this.productId);
-
-        this.productService.getProduct(this.restaurantId, this.productId).subscribe( product => {
-            this.product = product;
-
-            this.userService.getUser(this.userId).subscribe( user => {
-                this.user = user;
-                this.toggleButton();
-                this.isLoading = false;
+        this.userService
+            .getUserScore(this.restaurantId, this.userId)
+            .subscribe(res => {
+                if (res !== undefined) {
+                    this.userScore =  res.score;
+                }
             });
-        });
+
+        this.productService
+            .getProduct(this.restaurantId, this.productId)
+            .subscribe( product => {
+                this.product = product;
+
+                this.userService.getUser(this.userId).subscribe( user => {
+                    this.user = user;
+                    this.toggleButton();
+                    this.isLoading = false;
+                });
+            });
 
     }
 
@@ -65,53 +69,13 @@ export class ProductDetailPage implements OnInit {
     }
 
 
-    useVoucher() {
-        const uScore =  this.userScore;
-        const pScore =  this.product.price;
-
-        if ( uScore >= pScore ) {
-            this.userScore = uScore - pScore;
-
-            this.userService
-                    .updateUserScore(this.restaurantId, this.userId, this.userScore)
-                    .then( () => {
-                        if (this.userScore < this.product.price) {
-                            this.disableButton = true;
-                        }
-
-                        this.createVoucher();
-                    });
-
-        } else {
-            this.disableButton = true;
-        }
-
+    getVouchers(userId: string, restaurantId: string, productId: string) {
+        this.productService
+            .getVouchers(userId, restaurantId, productId)
+            .subscribe(res => {
+                this.vouchers = res;
+            });
     }
-
-
-    getVouchers(userId: string, productId: string) {
-        this.productService.getVouchers(userId, productId).subscribe(res => {
-            this.vouchers = res;
-        });
-    }
-
-
-    createVoucher() {
-        const voucherId = Math.random().toString(36).substr(2, 9);
-
-        const voucher = new Voucher(
-            voucherId,
-            this.restaurantId,
-            this.productId,
-            this.userId,
-        );
-
-        this.productService.createVoucher(voucher).then(res => {
-            this.showVoucherId(voucherId);
-        });
-
-    }
-
 
     showVoucherId(voucherId: string) {
         this.alertCtrl.create({
@@ -121,10 +85,9 @@ export class ProductDetailPage implements OnInit {
             buttons: ['OK']
         }).then(alertEl => {
             alertEl.present();
-            this.getVouchers(this.userId, this.productId);
+            this.getVouchers(this.userId, this.restaurantId, this.productId);
         });
     }
-
 
     showAlert() {
         this.alertCtrl.create({
@@ -145,6 +108,43 @@ export class ProductDetailPage implements OnInit {
         }).then(alertEl => {
             alertEl.present();
         });
+    }
+
+    useVoucher() {
+        const uScore =  this.userScore;
+        const pScore =  this.product.price;
+
+        if ( uScore >= pScore ) {
+
+            this.userScore = uScore - pScore;
+
+            this.userService
+                .updateUserScore(this.restaurantId, this.userId, this.userScore)
+                .then( () => {
+                    this.toggleButton();
+                    this.createVoucher();
+                });
+
+        } else {
+            this.disableButton = true;
+        }
+
+    }
+
+    createVoucher() {
+        const voucherId = Math.random().toString(36).substr(2, 9);
+
+        const voucher = new Voucher(
+            voucherId,
+            this.restaurantId,
+            this.productId,
+            this.userId,
+        );
+
+        this.productService.createVoucher(voucher).then(res => {
+            this.showVoucherId(voucherId);
+        });
+
     }
 
 }

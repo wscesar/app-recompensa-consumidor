@@ -52,20 +52,24 @@ export class ProductService {
     }
 
     createVoucher(voucher: Voucher) {
-        return this.firebase.collection('vouchers').add({...voucher});
+        return this.firebase.collection(`restaurants/${voucher.restaurantId}/vouchers`).add({...voucher});
     }
 
-    getVouchers(userId: string, productId: string) {
+    getVouchers(userId: string, restaurantId: string, productId: string) {
         return this.firebase
                     .collection(
-                        'vouchers',
+                        // 'vouchers',
+                        `restaurants/${restaurantId}/vouchers`,
                         ref => ref.where('productId', '==', productId).where('userId', '==', userId)
                     )
                     .snapshotChanges()
                     .pipe (
                         map ( ( docArray: DocumentChangeAction<any>[] ) => {
                             return docArray.map( ( doc: DocumentChangeAction<any> ) => {
-                                return doc.payload.doc.data();
+                                const id = doc.payload.doc.id;
+                                const data =  doc.payload.doc.data();
+                                // return doc.payload.doc.data();
+                                return { ...data, id };
                             });
                         }),
                     );

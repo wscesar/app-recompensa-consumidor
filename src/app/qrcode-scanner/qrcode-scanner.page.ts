@@ -6,10 +6,10 @@ import { AlertController, NavController } from '@ionic/angular';
 import { take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-scan-voucher',
-  templateUrl: 'scan-voucher.page.html',
+  selector: 'app-qrcode-scanner',
+  templateUrl: 'qrcode-scanner.page.html',
 })
-export class ScanVoucherPage implements OnInit {
+export class QRCodeScannerPage implements OnInit {
     isLoading = true;
     userId = this.authService.getUserId();
     barcodeScannerOptions: BarcodeScannerOptions;
@@ -68,7 +68,7 @@ export class ScanVoucherPage implements OnInit {
                         }
 
                         this.userService
-                            .updateUserScore(this.restaurantId, this.userId, {score: this.newScore})
+                            .updateUserScore(this.restaurantId, this.userId, this.newScore)
                             .then( () => {
                                 this.isLoading = false;
                                 this.scannedData = barcodeData;
