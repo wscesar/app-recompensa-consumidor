@@ -58,7 +58,6 @@ export class ProductService {
     getVouchers(userId: string, restaurantId: string, productId: string) {
         return this.firebase
                     .collection(
-                        // 'vouchers',
                         `restaurants/${restaurantId}/vouchers`,
                         ref => ref.where('productId', '==', productId).where('userId', '==', userId)
                     )
@@ -68,7 +67,6 @@ export class ProductService {
                             return docArray.map( ( doc: DocumentChangeAction<any> ) => {
                                 const id = doc.payload.doc.id;
                                 const data =  doc.payload.doc.data();
-                                // return doc.payload.doc.data();
                                 return { ...data, id };
                             });
                         }),

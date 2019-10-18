@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 
 import { AuthService } from './auth.service';
 import { User } from '../model/user.model';
@@ -29,6 +29,26 @@ export class UserService {
     // updateUserScore(userId: string, newScore: number) {
     //     return this.firebase.collection('users').doc(userId).update({score: newScore});
     // }
+
+    addGeneratedCode(uniqueId: string) {
+        return this.firebase.collection('genetated-codes').add({id: uniqueId});
+    }
+
+    getGeneratedCodes(uniqueId: string) {
+        return this.firebase
+                    .collection(
+                        'genetated-codes',
+                        ref => ref.where('id', '==', uniqueId)
+                    )
+                    .snapshotChanges()
+                    .pipe (
+                        map ( ( docArray: DocumentChangeAction<any>[] ) => {
+                            return docArray.map( ( doc: DocumentChangeAction<any> ) => {
+                                return  doc.payload.doc.data();
+                            });
+                        }),
+                    );
+    }
 
     getUser(userId: string) {
         return this.firebase

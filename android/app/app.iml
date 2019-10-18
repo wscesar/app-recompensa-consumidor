@@ -140,5 +140,9 @@
     <orderEntry type="module" module-name="capacitor-android" />
     <orderEntry type="module" module-name="capacitor-cordova-android-plugins" />
     <orderEntry type="module" module-name="capacitor-android" />
+    <orderEntry type="module" module-name="capacitor-cordova-android-plugins" />
+    <orderEntry type="module" module-name="capacitor-android" />
+    <orderEntry type="module" module-name="capacitor-cordova-android-plugins" />
+    <orderEntry type="module" module-name="capacitor-android" />
   </component>
 </module>

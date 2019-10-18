@@ -35,70 +35,67 @@ export class QRCodeScannerPage implements OnInit {
         };
     }
 
-    ionViewWillEnter() {
-        this.scanCode();
-    }
+    // ionViewWillEnter() {
+    //     this.scanCode();
+    // }
+
+    teste: string;
 
     scanCode() {
         this.isLoading = true;
         this.barcodeScanner.scan()
             .then(barcodeData => {
 
+                this.scannedData = barcodeData;
+
                 const splitData = barcodeData.text.split('-');
-
-                if (splitData.length < 1) {
-                    alert('invalid code');
-                    return;
-                }
-
                 this.restaurantId = splitData[0];
                 this.scannedScore = +splitData[1];
+                this.teste = splitData[2];
 
-                this.userService
-                    .getUserScore(this.restaurantId, this.userId)
-                    .pipe( take(1) )
-                    .subscribe( res => {
-                        // let newScore: any;
-                        // const currentScore = res.score;
-                        this.currentScore = res.score;
-                        if (this.currentScore !== undefined && this.currentScore !== null) {
-                            this.newScore = this.currentScore + this.scannedScore;
-                        } else {
-                            this.newScore = 0;
-                        }
+                this.userService.getGeneratedCodes(this.teste).subscribe( res => {
+                    if (res[0] === undefined) {
+                        this.addGeneratedCode();
+                    } else if (res[0].id === this.teste) {
+                        alert('codigo ja adicionado');
+                    }
+                });
 
-                        this.userService
-                            .updateUserScore(this.restaurantId, this.userId, this.newScore)
-                            .then( () => {
-                                this.isLoading = false;
-                                this.scannedData = barcodeData;
-                                this.showAlert();
-                            })
-                            .catch( err => {
-                                this.isLoading = false;
-                                alert('catch: ' + err);
-                            });
-                    });
-
-            })
-            .catch(err => {
-                this.isLoading = false;
-                alert('catch 2: ' + err);
             });
     }
 
-    encodedText() {
-        this.barcodeScanner
-            .encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodeData)
-            .then(
-                encodeData => {
-                    console.log(encodeData);
-                    this.encodeData = encodeData;
-                },
-                err => {
-                    console.log('Error ocurred:', err);
+    addGeneratedCode() {
+        this.userService.addGeneratedCode(this.teste).then( () => {
+            this.getUserScore();
+        });
+    }
+
+    getUserScore() {
+        this.userService
+            .getUserScore(this.restaurantId, this.userId)
+            .pipe( take(1) )
+            .subscribe( userScore => {
+
+                this.currentScore = userScore.score;
+
+                if (this.currentScore >= 0) {
+                    this.newScore = this.currentScore + this.scannedScore;
+                } else {
+                    this.newScore = 0;
                 }
-            );
+
+                this.updateUserScore();
+
+            });
+    }
+
+    updateUserScore() {
+        this.userService
+            .updateUserScore(this.restaurantId, this.userId, this.newScore)
+            .then( () => {
+                this.isLoading = false;
+                this.showAlert();
+            });
     }
 
     showAlert() {
@@ -109,7 +106,7 @@ export class QRCodeScannerPage implements OnInit {
                 {
                     text: 'Ok',
                     handler: () => {
-                        this.navCtrl.navigateBack('/restaurantes');
+                        // this.navCtrl.navigateBack('/restaurantes');
                     }
                 },
             ]

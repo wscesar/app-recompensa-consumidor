@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { RestaurantService } from '../services/restaurant.service';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -18,7 +20,8 @@ export class AuthPage implements OnInit {
     errorMessage: string;
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private userService: UserService,
         ) {}
 
     ngOnInit() {
